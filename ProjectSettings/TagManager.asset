@@ -9,15 +9,16 @@ TagManager:
   - Enemy3
   - DeathZone
   - ItemGood
+  - Ground
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Background
   - Water
   - UI
   - 
-  - 
+  - Platforms
   - Enemies
   - 
   - 

@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     public Sprite[] mySprites;
     private int index = 0;
 
+    private bool isGrounded = false; // Para controlar salto del jugador
+
     private Rigidbody2D myrigidbody2d;
     private SpriteRenderer mySpriteRenderer;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -42,11 +44,29 @@ public class PlayerController : MonoBehaviour
             mySpriteRenderer.flipX = true;  // Mira a la izquierda
         }
         // Salto de personaje
-        if (Input.GetKeyDown(KeyCode.Space))
+        // Salto de personaje (solo si está en contacto con el suelo)
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             myrigidbody2d.linearVelocity = new Vector2(
                 myrigidbody2d.linearVelocity.x,
                 playerJumpForce);
+            isGrounded = false; // Evita saltos dobles hasta volver a tocar el suelo
+        }   
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = false;
         }
     }
 
