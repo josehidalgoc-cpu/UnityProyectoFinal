@@ -10,6 +10,7 @@ TagManager:
   - DeathZone
   - ItemGood
   - Ground
+  - FirstGround
   layers:
   - Default
   - TransparentFX

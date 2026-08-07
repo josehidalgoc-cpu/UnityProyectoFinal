@@ -74,7 +74,7 @@ public class PlatformSpawnManager : MonoBehaviour
 
     void CleanupOldPlatforms(PlatformColumn column)
     {
-        float cameraBottomY = cameraFollow.transform.position.y - destroyBufferBelowCamera;
+        float cameraBottomY = cameraFollow.GetCameraBottomY() - destroyBufferBelowCamera;
 
         for (int i = column.activePlatforms.Count - 1; i >= 0; i--)
         {
