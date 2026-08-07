@@ -7,6 +7,7 @@ public class EnemyHoming : EnemyBase
     public float maxVerticalSpeed = 2f;
 
     private Transform player;
+    private PlayerController myplayerController;
 
     protected override void Start()
     {

@@ -7,15 +7,18 @@ TagManager:
   - Enemy1
   - Enemy2
   - Enemy3
+  - DeathZone
+  - ItemGood
+  - Ground
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Background
   - Water
   - UI
   - 
-  - 
+  - Platforms
   - Enemies
   - 
   - 
@@ -43,6 +46,12 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: BACKGROUND-LAYER
+    uniqueID: 3859351113
+    locked: 0
+  - name: TEXT-LAYER
+    uniqueID: 1771671775
     locked: 0
   m_RenderingLayers:
   - Default
