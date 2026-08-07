@@ -5,39 +5,50 @@ public class CameraFollow : MonoBehaviour
     [Header("Referencia al jugador")]
     public Transform player;
 
-    [Header("Configuración de seguimiento")]
-    public float smoothSpeed = 5f;      // Qué tan suave sube la cámara
-    public float verticalOffset = 2f;   // Qué tan arriba del jugador se posiciona la cámara
+    [Header("Velocidad de subida")]
+    public float startSpeed = 1f;       // Velocidad inicial de subida (unidades/seg)
+    public float maxSpeed = 5f;         // Velocidad máxima que puede alcanzar
+    public float acceleration = 0.05f;  // Cuánto aumenta la velocidad por segundo
 
-    private float highestY; // Guarda la posición Y más alta alcanzada por la cámara
+    [Header("Detección de inicio")]
+    public float movementThreshold = 0.1f; // Cuánto debe moverse el jugador para "activar" la subida
+
+    private float currentSpeed;
+    private bool hasStarted = false;
+    private Vector3 playerStartPosition;
 
     void Start()
     {
-        highestY = transform.position.y;
+        currentSpeed = startSpeed;
+
+        if (player != null)
+        {
+            playerStartPosition = player.position;
+        }
     }
 
     void LateUpdate()
     {
         if (player == null) return;
 
-        float targetY = player.position.y + verticalOffset;
-
-        // Solo sube si el jugador superó la altura actual de la cámara, nunca baja
-        if (targetY > highestY)
+        if (!hasStarted)
         {
-            highestY = targetY;
+            if (Vector3.Distance(player.position, playerStartPosition) > movementThreshold)
+            {
+                hasStarted = true;
+            }
+            else
+            {
+                return;
+            }
         }
 
-        Vector3 newPosition = new Vector3(
-            transform.position.x,
-            Mathf.Lerp(transform.position.y, highestY, smoothSpeed * Time.deltaTime),
-            transform.position.z);
+        currentSpeed = Mathf.Min(currentSpeed + acceleration * Time.deltaTime, maxSpeed);
 
-        transform.position = newPosition;
+        transform.position += new Vector3(0, currentSpeed * Time.deltaTime, 0);
     }
 
-    // Método público para que otros scripts (como el spawner de plataformas) 
-    // sepan hasta dónde ha subido la cámara
+    // Se mantiene igual para el PlatformSpawnManager
     public float GetCameraTopY()
     {
         Camera cam = GetComponent<Camera>();
