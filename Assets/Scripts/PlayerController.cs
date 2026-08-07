@@ -16,13 +16,14 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D myrigidbody2d;
     private SpriteRenderer mySpriteRenderer;
+    private Camera mainCamera;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         myrigidbody2d = GetComponent<Rigidbody2D>();
         mySpriteRenderer = GetComponent<SpriteRenderer>(); 
         StartCoroutine(WalkCoRutine());
-
+        mainCamera = Camera.main; // Obtener la referencia a la cámara principal
     }
 
     // Update is called once per frame
@@ -56,7 +57,7 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("FirstGround"))
         {
             isGrounded = true;
         }
@@ -64,7 +65,7 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("FirstGround"))
         {
             isGrounded = false;
         }

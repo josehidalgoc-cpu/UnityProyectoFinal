@@ -55,4 +55,11 @@ public class CameraFollow : MonoBehaviour
         float camHeight = cam.orthographicSize;
         return transform.position.y + camHeight;
     }
+
+    public float GetCameraBottomY()
+    {
+        Camera cam = GetComponent<Camera>();
+        float camHeight = cam.orthographicSize;
+        return transform.position.y - camHeight;
+    }
 }
