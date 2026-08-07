@@ -11,6 +11,8 @@ TagManager:
   - ItemGood
   - Ground
   - FirstGround
+  - textScore
+  - ScoreText
   layers:
   - Default
   - TransparentFX
