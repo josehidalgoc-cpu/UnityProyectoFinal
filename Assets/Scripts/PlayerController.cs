@@ -17,11 +17,14 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D myrigidbody2d;
     private SpriteRenderer mySpriteRenderer;
     private Camera mainCamera;
+    private GameManager myGameManager;
+    public GameObject Bullet; // Para agregar bala al juego.
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         myrigidbody2d = GetComponent<Rigidbody2D>();
-        mySpriteRenderer = GetComponent<SpriteRenderer>(); 
+        mySpriteRenderer = GetComponent<SpriteRenderer>();
+        myGameManager = FindObjectOfType<GameManager>();
         StartCoroutine(WalkCoRutine());
         mainCamera = Camera.main; // Obtener la referencia a la cámara principal
     }
@@ -77,7 +80,14 @@ public class PlayerController : MonoBehaviour
         if (collision.CompareTag("ItemGood"))
         {
             Destroy(collision.gameObject);
-            // myGameManager.AddScore();
+            if (myGameManager != null)
+            {
+                myGameManager.AddScore();
+            }
+            else
+            {
+                Debug.LogWarning("GameManager reference is missing in PlayerController.");
+            }
         }
         // Detectar colisiones con objetos etiquetados como "EnemyN" y destruirlos
         if (collision.CompareTag("Enemy3") || collision.CompareTag("Enemy2") || collision.CompareTag("Enemy1"))
