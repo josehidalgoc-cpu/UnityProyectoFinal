@@ -99,11 +99,42 @@ public class PlayerController : MonoBehaviour
         {
             PlayerDeath();
         }
+        // Detectar la meta del nivel y pasar al siguiente
+        if (collision.CompareTag("LevelGoal"))
+        {
+            GoToNextLevel();
+        }
     }
     // Muerte de personaje (AGREGAR TAG PLAYER)
     void PlayerDeath() 
     {
+        GameOverManager.levelToRetry = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene("DeathScene");
+    }
+
+    // Avanza a la siguiente escena según el nivel actual
+    void GoToNextLevel()
+    {
+        string currentScene = SceneManager.GetActiveScene().name;
+
+        if (currentScene == "LevelOne")
+        {
+            SceneManager.LoadScene("LevelTwo");
+        }
+        else if (currentScene == "LevelTwo")
+        {
+            SceneManager.LoadScene("LevelThree");
+        }
+        else if (currentScene == "LevelThree")
+        {
+            // TODO: todavía no hay escena definida para después del último nivel
+            // (pantalla de victoria, volver al menú, etc.) — avisar el nombre cuando exista.
+            Debug.Log("Nivel completado: LevelThree. Falta definir la escena siguiente (victoria/menú).");
+        }
+        else
+        {
+            Debug.LogWarning("GoToNextLevel: escena actual no reconocida (" + currentScene + "). Revisar nombres.");
+        }
     }
 
     IEnumerator WalkCoRutine()
